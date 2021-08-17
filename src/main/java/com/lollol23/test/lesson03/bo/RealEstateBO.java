@@ -24,4 +24,12 @@ public class RealEstateBO {
 	public List<RealEstate> getRealEstate2(int area, int price) {
 		return realEstateDAO.selectRealEstate2(area, price);
 	}
+	
+	public int addRealEstateObject(RealEstate realEstate) {
+		return realEstateDAO.insertRealEstateObject(realEstate);
+	}
+	
+	public int addRealEstate(int realtorId, String address, int area, String type, int price, int rentPrice) {
+		return realEstateDAO.insertRealEstate(realtorId, address, area, type, price, rentPrice);
+	}
 }
