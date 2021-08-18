@@ -32,4 +32,12 @@ public class RealEstateBO {
 	public int addRealEstate(int realtorId, String address, int area, String type, int price, int rentPrice) {
 		return realEstateDAO.insertRealEstate(realtorId, address, area, type, price, rentPrice);
 	}
+	
+	public int updateRealEstatePrice(int id, String type, int price) {
+		return realEstateDAO.updateRealEstatePrice(id, type, price);
+	}
+	
+	public int deleteRealEstate(int id) {
+		return realEstateDAO.deleteRealEstate(id);
+	}
 }
