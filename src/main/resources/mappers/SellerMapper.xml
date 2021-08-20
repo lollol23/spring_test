@@ -31,4 +31,15 @@
  		ORDER BY `id` DESC
  		LIMIT 1
  	</select>
+ 	
+ 	<select id="selectSellerById" resultType="com.lollol23.test.lesson04.model.Seller" parameterType="int">
+ 		SELECT
+ 			`nickname`
+ 			, `profileImageUrl`
+ 			, `temperature`
+ 		FROM
+ 			`seller`
+ 		WHERE
+ 			`id` = #{id}
+ 	</select>
  </mapper>

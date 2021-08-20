@@ -34,16 +34,18 @@ public class SellerController {
 	}
 	
 	@RequestMapping("/lesson04/test01/seller_info")
-	@ResponseBody
-	public String lastSeller(Model model, @RequestParam("id") int id) {
-		if(id == -1) {
+	public String lastSeller(Model model, @RequestParam("id") Integer id) {
+		if(id == null) {
 			Seller seller = sellerBO.getLastSeller();
 			model.addAttribute("result", seller);
 			model.addAttribute("subject", "판매자 정보");
 			
 			return "lesson04/sellerInfo";
 		} else {
-			return "11";
+			Seller seller = sellerBO.getSellerById(id);
+			model.addAttribute("result", seller);
+			model.addAttribute("subject", "판매자 정보");
+			return "lesson04/sellerInfo";
 		}
 
 	}
