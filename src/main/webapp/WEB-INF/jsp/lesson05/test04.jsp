@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Test03</title>
+<title>test04</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
             
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -16,46 +18,52 @@
 </head>
 <body>
 	<div class="container">
-		<h1>1.후보자 득표율</h1>
+		<h1>회원 정보 리스트</h1>
 		<table class="table text-center">
 			<thead>
 				<tr>
-					<th>기호</th>
-					<th>득표수</th>
-					<th>득표율</th>
+					<th>No</th>
+					<th>이름</th>
+					<th>전화 번호</th>
+					<th>국적</th>
+					<th>이메일</th>
+					<th>자기소개</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="candidate" items="${candidates }" varStatus="status" >
+				<c:forEach var="member" items="${members }" varStatus="status">
 					<tr>
 						<td>${status.count }</td>
-						<td><fmt:formatNumber value="${candidate }" type="number"/></td>
-						<td><fmt:formatNumber value="${candidate / 1000000 }" type="percent"/></td>
+						<td>${member.name }</td>
+						<td>
+							<c:set var="number" value="${member.phoneNumber }" />
+							<c:set var="number3" value="${fn:substring(number, 0, 3) }" />
+							<c:choose>
+								<c:when test="${number3 eq '010' }">${number }</c:when>
+								<c:otherwise>유효하지않은 번호</c:otherwise>
+							</c:choose>
+						</td>
+						<td>
+							${fn:replace(member.nationality, '삼국시대', '삼국 -') }
+						</td>
+						<td>
+							<c:set var="emailId" value="${member.email }" />
+							<c:set var="id" value="${fn:split(emailId, '@')[0] }" />
+							<c:set var="domain" value="${fn:split(emailId, '@')[1] }" />
+							<span class="font-weight-bold">${id }</span>@${domain }
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${fn:length(member.introduce) > 15 }">
+									${fn:substring(member.introduce, 0, 15) }...
+								</c:when>
+								<c:otherwise>${member.introduce }</c:otherwise>
+							</c:choose>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>
-		<h2>2.카드 명세서</h2>
-		<table class="table text-center">
-			<thead>
-				<tr>
-					<th>사용처</th>
-					<th>가격</th>
-					<th>사용 날짜</th>
-					<th>할부</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="cardBill" items="${cardBills }">
-					<fmt:parseDate value="${cardBill.date }" pattern="yyyy-MM-dd" var="date" />
-					<tr>
-						<td>${cardBill.store }</td>
-						<td><fmt:formatNumber value="${cardjBill.pay }" type="currency" /></td>
-						<td><fmt:formatDate value="${date }" pattern="yyyy년 M월 dd일" /></td>
-						<td>${cardBill.installment }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
+		
 		</table>
 	</div>
 </body>
