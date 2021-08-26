@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lollol23.test.lesson05.bo.WeatherHistoryBO;
 import com.lollol23.test.lesson05.model.Member;
+import com.lollol23.test.lesson05.model.WeatherHistory;
 
 @RequestMapping("/lesson05")
 @Controller
@@ -173,5 +177,15 @@ public class Lesson05Controller {
 		
 		model.addAttribute("members", memebers);
 		return "/lesson05/test04";
+	}
+	
+	@Autowired
+	private WeatherHistoryBO weatherHistoryBO;
+	
+	@RequestMapping("/test05")
+	
+	public String test05(Model model) {
+		model.addAttribute("weatherHistorys", weatherHistoryBO.getWeatherHistory());
+		return "/lesson05/test05";
 	}
 }
