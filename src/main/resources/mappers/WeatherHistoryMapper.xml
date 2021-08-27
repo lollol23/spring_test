@@ -18,4 +18,28 @@
  			`weatherHistory`
  	</select>
  	
+ 	<insert id="insertWeatherHistory" parameterType="com.lollol23.test.lesson05.model.WeatherHistory">
+ 		INSERT INTO `weatherHistory`
+ 		(
+ 			`date`
+ 			, `weather`
+ 			, `temperatures`
+ 			, `precipitation`
+ 			, `microDust`
+ 			, `windSpeed`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		) VALUES
+ 		(
+ 			#{date}
+ 			, #{weather}
+ 			, #{temperatures}
+ 			, #{precipitation}
+ 			, #{microDust}
+ 			, #{windSpeed}
+ 			, now()
+ 			, now()
+ 		)
+ 	</insert>
+ 	
  </mapper>

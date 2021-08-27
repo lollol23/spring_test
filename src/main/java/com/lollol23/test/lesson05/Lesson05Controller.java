@@ -1,6 +1,7 @@
 package com.lollol23.test.lesson05;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lollol23.test.lesson05.bo.WeatherHistoryBO;
 import com.lollol23.test.lesson05.model.Member;
-import com.lollol23.test.lesson05.model.WeatherHistory;
 
 @RequestMapping("/lesson05")
 @Controller
@@ -183,9 +184,26 @@ public class Lesson05Controller {
 	private WeatherHistoryBO weatherHistoryBO;
 	
 	@RequestMapping("/test05")
-	
 	public String test05(Model model) {
 		model.addAttribute("weatherHistorys", weatherHistoryBO.getWeatherHistory());
 		return "/lesson05/test05";
+	}
+	
+	@GetMapping("/test05_1")
+	public String test05_1() {
+		return "/lesson05/test05_1";
+	}
+	
+	@PostMapping("/test05_insertSuccess")
+	public String addWeatherHistory(
+			@RequestParam("date") Date date
+			, @RequestParam("weather") String weather
+			, @RequestParam("temperatures") double temperatures
+			, @RequestParam("precipitation") double precipitation
+			, @RequestParam("microDust") String microDust
+			, @RequestParam("windSpeed") double windSpeed
+			) {
+		weatherHistoryBO.addWeatherHistory(date, weather, temperatures, precipitation, microDust, windSpeed);
+		return "redirect:/leson05/test05";
 	}
 }
