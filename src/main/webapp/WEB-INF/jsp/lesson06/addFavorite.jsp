@@ -16,10 +16,60 @@
 	<div class="container">
 		<h1>즐겨찾기 추가하기</h1>
 		<label>제목</label>
-		<input type="text" name="name" id="name" class="form-control"><br>
+		<input type="text" id="titleInput" class="form-control"><br>
 		<label>주소</label>
-		<input type="text" name="url" id="url" class="form-control"><br>
-		<button class="btn btn-success" id="addBtn">추가</button>
+		<input type="text" id="urlInput" class="form-control"><br>
+		<button class="btn btn-success" id="addFavorite">추가</button>
 	</div>
+	
+	<script>
+	$(document).ready(function() {
+		$("#addFavorite").on("click", function() {
+			var title = $("#titleInput").val();
+			var url = $("#urlInput").val();
+			
+			if(title == null || title == "") {
+				alert("제목을 입력하세요");
+				return;
+			}
+			
+			if(url == null || url == "") {
+				alert("주소를 입력하세요");
+				return;
+			}
+			
+			// http:// 또는 https:// 가 아니면 잘못된 url
+			if(!(url.startsWith("http://") || url.startsWith("https://"))) {
+				alert("잘못된 주소 형식입니다.");
+				return;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:"/lesson06/add_favorite",
+				data:{"name":title, "url":url},
+				success:function(data) {
+					// 성공 했을때 {"result" : "success"}
+					// 실패 했을때 {"result" : "fail"};
+					if(data.result == "success") {
+						location.href="/lesson06/favorite_list";
+					} else {
+						alert("삽입 실패");
+					}
+					
+				},
+				error :function(e) {
+					alert("error");
+				}
+				
+			});
+			
+			
+		});
+	});
+	
+	
+	</script>
+	
 </body>
 </html>

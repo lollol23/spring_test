@@ -27,11 +27,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="favorite" items="${result }">
+			<c:forEach var="favorite" items="${favoriteList }">
 				<tr>
-					<td>${result.id }</td>
-					<td>${result.name }</td>
-					<td>${result.url }</td>
+					<td>${favorite.id }</td>
+					<td>${favorite.name }</td>
+					<td>${favorite.url }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
